@@ -1,6 +1,8 @@
 #include "waves.h"
 
+const int BUFFSIZE = 128;
 
+int buff[BUFFSIZE]; //buffer to contain samples for proccessing
 
 const int button1 = 2; //button at digital pin 2
 const int button2 = 3;
@@ -24,25 +26,33 @@ void loop() {
   //for(int j = 0; j < 50; j++){ // this config gives us a sick gameboy drum beat
 
  if(digitalRead(button1) == LOW){ //button 1 
-    playKey(1); //90 for mary had a lil
+    playKey(221); //90 for mary had a lil (bassTable)
   }
  else if(digitalRead(button2) == LOW){ //button 1 
-    playKey(2); //100 for mary had a lil
+    playKey(185); //102 for mary had a lil (bassTable)
   }
  else if(digitalRead(button3) == LOW){ //button 1 
-    playKey(3); //113 for mary had a lil
+    playKey(164); //115 for mary had a lil (bassTable)
    }
  }
 
 
-void playKey(int delayTime){
+void playKey(float delayTime){
   int j = 0;
-  for(int i=0; i<271*delayTime; i++) { //
-    j = i/delayTime;
-    analogWrite(DAC0, bassTable[j]);//sin table
-    delayMicroseconds(0); //determines the frequency of the sine wav
-    
+  for(int i=0; i<271; i++) { //
+  //  bufferFill(bassTable);
+    analogWrite(DAC0, bassTable[i]);//sin table
+    delayMicroseconds(delayTime); //determines the frequency of the sine wav
+    i+=3;
   }
 }
+
+void bufferFill(int * input)
+{
+  for(int i=0; i < BUFFSIZE; i++){
+    buff[i] = *(input+i);
+  }
+}
+
 //end
 

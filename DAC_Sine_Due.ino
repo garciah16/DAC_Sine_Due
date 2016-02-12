@@ -4,9 +4,11 @@ const int BUFFSIZE = 128;
 
 int buff[BUFFSIZE]; //buffer to contain samples for proccessing
 
-const int button1 = 2; //button at digital pin 2
-const int button2 = 3;
-const int button3 = 4;
+const int button1 = 30; //button at digital pin 2
+const int button2 = 28;
+const int button3 = 26;
+const int button4 = 24;
+const int button5 = 22;
 
 boolean pushed = false;
 
@@ -17,6 +19,8 @@ void setup() {
   pinMode(button1, INPUT);
   pinMode(button2, INPUT);
   pinMode(button3, INPUT);
+  pinMode(button4, INPUT);
+  pinMode(button5, INPUT);
   analogWriteResolution(12);
   analogReadResolution(12);
 }
@@ -29,11 +33,17 @@ void loop() {
     playKey(221); //90 for mary had a lil (bassTable)
   }
  else if(digitalRead(button2) == LOW){ //button 1 
-    playKey(185); //102 for mary had a lil (bassTable)
+    playKey(196); //102 for mary had a lil (bassTable)
   }
  else if(digitalRead(button3) == LOW){ //button 1 
     playKey(164); //115 for mary had a lil (bassTable)
    }
+ else if(digitalRead(button4) == LOW){
+    playKey(146);
+ }
+ else if(digitalRead(button5) == LOW){
+    playKey(138);
+ }
  }
 
 
@@ -41,7 +51,7 @@ void playKey(float delayTime){
   int j = 0;
   for(int i=0; i<271; i++) { //
   //  bufferFill(bassTable);
-    analogWrite(DAC0, bassTable[i]);//sin table
+    analogWrite(DAC1, bassTable[i]);//sin table
     delayMicroseconds(delayTime); //determines the frequency of the sine wav
     i+=3;
   }
